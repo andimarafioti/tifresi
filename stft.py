@@ -16,7 +16,7 @@ class GaussTF(object):
         assert(np.mod(len(x), a)==0)
         assert(np.mod(len(x), M)==0)
         g_analysis = {'name': 'gauss', 'tfr': self.a*self.M/len(x)}
-        return ltfatpy.dgtreal(x, g_analysis, a, M)[0]
+        return ltfatpy.dgtreal(x.astype(np.float64), g_analysis, a, M)[0]
     def idgt(self, X, a=None, M=None):
         """Compute the inverse DGT for real signal x with a gauss window."""
         if a is None:
@@ -29,4 +29,4 @@ class GaussTF(object):
         tfr = self.a*self.M/L
         g_analysis = {'name': 'gauss', 'tfr': tfr }
         g_synthesis = {'name': ('dual', g_analysis['name']), 'tfr': tfr}
-        return ltfatpy.idgtreal(X, g_synthesis, a, M)[0]
+        return ltfatpy.idgtreal(X.astype(np.complex128), g_synthesis, a, M)[0]
