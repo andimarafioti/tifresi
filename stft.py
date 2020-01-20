@@ -6,8 +6,7 @@ class GaussTF(object):
     def __init__(self, a, M):
         self.a = a
         self.M = M
-    def dgt(self, x, a=None, M=None):
-        """Compute the DGT of a real signal x with a gauss window."""
+    def dgt(self, x, a=None, M=None):    
         if a is None:
             a = self.a
         if M is None:
