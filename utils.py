@@ -26,7 +26,7 @@ def load_signal(fpath, sr=None):
     return y, sr
 
 
-def downsample_tf_time(mel, rr)
+def downsample_tf_time(mel, rr):
     tmp = np.zeros([mel.shape[0], mel.shape[1]//rr], tmp.dtype)
     for i in range(rr):
         tmp += mel[:, i::rr]
