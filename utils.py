@@ -1,10 +1,13 @@
 import numpy as np
 import librosa
-
+from hparams import HParams as p
 
 # This function might need another name
-def preprocess_signal(y, M=1024):
-    """Trim and cut signal"""
+def preprocess_signal(y, M=p.M):
+    """Trim and cut signal.
+    
+    The function ensures that the signal length is a multiple of M.
+    """
     # Trimming
     y, _ = librosa.effects.trim(y)
 
@@ -21,12 +24,14 @@ def preprocess_signal(y, M=1024):
 
 
 def load_signal(fpath, sr=None):
+    """Load a signal from path."""
     # Loading sound file
     y, sr = librosa.load(fpath, sr=sr)
     return y, sr
 
 
 def downsample_tf_time(mel, rr):
+    """Downsample a TF representation along the time axis."""
     tmp = np.zeros([mel.shape[0], mel.shape[1] // rr], mel.dtype)
     for i in range(rr):
         tmp += mel[:, i::rr]
