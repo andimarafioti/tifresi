@@ -11,6 +11,7 @@ def log_spectrogram(spectrogram, dB=p.stft_dB):
     a_min = np.max(spectrogram)/10**(dB/10)
     return 10*np.log10(np.clip(spectrogram, a_min=a_min, a_max=None))
 
+
 def inv_log_spectrogram(log_spec):
     """Inverse the log representation of the spectogram."""
     return 10**(log_spec/10)
