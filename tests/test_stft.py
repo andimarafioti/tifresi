@@ -41,6 +41,21 @@ def test_stft_different_hop_size():
     assert(np.linalg.norm(x128dot-x)<1e-12)
     assert(np.linalg.norm(x256dot-x)<1e-12)
 
+def test_stft_different_channels():
+    hop_size = 128
+    stft_channels = 1024
+    tfsystem = GaussTF(hop_size,stft_channels)
+    L = 128*1024
+    x = np.random.rand(L)*2-1
+    x = x/np.linalg.norm(x)
+    X1024 = tfsystem.dgt(x, stft_channels=1024)
+    X512 = tfsystem.dgt(x, stft_channels=512)
+    assert(np.sum(np.abs(X512-X1024[::2,:]))<1e-12)
+    x1024dot = tfsystem.idgt(X1024, stft_channels=1024)
+    x512dot = tfsystem.idgt(X512, stft_channels=512)
+    assert(np.linalg.norm(x1024dot-x)<1e-12)
+    assert(np.linalg.norm(x512dot-x)<1e-12)
+
 if __name__ == "__main__":
     test_stft_different_length()
     test_stft_different_hop_size()
