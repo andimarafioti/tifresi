@@ -1,3 +1,4 @@
+import librosa
 
 
 class HParams(object):
@@ -20,7 +21,4 @@ class HParams(object):
     
     mel_dB = 50 # Number of dB for the MEL
     
-    
-    
-    
-    
+    mel_basis = librosa.filters.mel(sr=sr, n_fft=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax)
