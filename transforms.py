@@ -17,7 +17,7 @@ def inv_log_spectrogram(log_spec):
     return 10 ** (log_spec / 10)
 
 
-def log_mel_spectrograms(spectrogram, stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr, dB=p.mel_dB):
+def log_mel_spectrograms(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr, dB=p.mel_dB):
     """Compute the log mel spectrogram from a spectrogram."""
     melSpectrogram = mel_spectrogram(spectrogram, stft_channels=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax,
                                      sr=sr)
