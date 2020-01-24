@@ -32,7 +32,7 @@ class GaussTF(object):
         if hop_size is None:
             hop_size = self.hop_size
         if stft_channels is None:
-            stft_channels = self.M
+            stft_channels = self.stft_channels
         assert (len(X.shape) == 2)
         assert (X.shape[0] == stft_channels // 2 + 1)
         L = hop_size * X.shape[1]
