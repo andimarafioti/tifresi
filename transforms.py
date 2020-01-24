@@ -25,6 +25,6 @@ def log_mel_spectrograms(spectrogram, stft_channels, n_mels=p.n_mels, fmin=p.fmi
 
 
 def mel_spectrogram(spectrogram, stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.fmax):
-    """Compute the mel spectromgram from a spectrogram."""
+    """Compute the mel spectrogram from a spectrogram."""
     mel_basis = librosa.filters.mel(sr=sr, n_fft=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax)
     return np.dot(mel_basis, spectrogram)
