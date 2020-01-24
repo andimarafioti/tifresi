@@ -13,7 +13,7 @@ def log_spectrogram(spectrogram, dB=p.stft_dB):
 
 
 def inv_log_spectrogram(log_spec):
-    """Inverse the log representation of the spectogram."""
+    """Inverse the log representation of the spectrogram or mel spectrogram."""
     return 10 ** (log_spec / 10)
 
 
