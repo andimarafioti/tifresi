@@ -19,8 +19,8 @@ def inv_log_spectrogram(log_spec):
 def log_mel_spectrograms(spectrogram, stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr, dB=p.mel_dB):
     """Compute the log mel spectrogram from a spectrogram."""
     melSpectrogram = mel_spectrogram(spectrogram, stft_channels=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax, sr=sr)
-    # a_min = np.max(magSpectrogram)/10**(dB/10)  # which min do we want to use here?
-    return 10*np.log10(np.clip(melSpectrogram, a_min=dB, a_max=None))
+    a_min = np.max(melSpectrogram)/10**(dB/10)
+    return 10*np.log10(np.clip(melSpectrogram, a_min=a_min, a_max=None))
 
 
 def mel_spectrogram(spectrogram, stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.fmax):
