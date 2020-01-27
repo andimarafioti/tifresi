@@ -13,6 +13,7 @@ class GaussTF(object):
     """
 
     def __init__(self, hop_size=p.hop_size, stft_channels=p.stft_channels):
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         self.hop_size = hop_size
         self.stft_channels = stft_channels
 
@@ -24,6 +25,7 @@ class GaussTF(object):
             stft_channels = self.stft_channels
         assert (len(x.shape) == 1)
         assert (np.mod(len(x), hop_size) == 0)
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (np.mod(len(x), stft_channels) == 0)
         g_analysis = {'name': 'gauss', 'tfr': self.hop_size * self.stft_channels / len(x)}
         return ltfatpy.dgtreal(x.astype(np.float64), g_analysis, hop_size, stft_channels)[0]
@@ -35,6 +37,7 @@ class GaussTF(object):
         if stft_channels is None:
             stft_channels = self.stft_channels
         assert (len(X.shape) == 2)
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (X.shape[0] == stft_channels // 2 + 1)
         L = hop_size * X.shape[1]
         tfr = self.hop_size * self.stft_channels / L
