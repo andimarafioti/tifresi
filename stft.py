@@ -62,7 +62,7 @@ class GaussTF(object):
         logMagSpectrogram = log_spectrogram(spectrogram, dynamic_range_dB=50) * np.log(10)
         phase = pghi(logMagSpectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length, tol=10)
 
-        reComplexStft = (np.e ** logMagSpectrogram) * np.exp(1.0j * phase)
+        reComplexStft = spectrogram * np.exp(1.0j * phase)
 
         return self.idgt(reComplexStft, hop_size, stft_channels)
 
