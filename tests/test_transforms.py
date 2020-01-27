@@ -1,7 +1,7 @@
 import librosa
 import numpy as np
 
-from transforms import log_spectrogram, inv_log_spectrogram, log_mel_spectrograms, mel_spectrogram
+from transforms import log_spectrogram, inv_log_spectrogram, log_mel_spectrogram, mel_spectrogram
 
 __author__ = 'Andres'
 
@@ -29,7 +29,7 @@ def test_log_mel_spectrogram():
 
     x_mel = mel_spectrogram(x)
 
-    log_x = log_mel_spectrograms(x, dynamic_range_dB=80)
+    log_x = log_mel_spectrogram(x, dynamic_range_dB=80)
     inv_log_x = inv_log_spectrogram(log_x)
 
     assert (np.linalg.norm(inv_log_x - x_mel) < 1e-7)
@@ -40,7 +40,7 @@ def test_log_mel_spectrogram_small_range():
 
     x_mel = mel_spectrogram(x)
 
-    log_x = log_mel_spectrograms(x, dynamic_range_dB=30)
+    log_x = log_mel_spectrogram(x, dynamic_range_dB=30)
     inv_log_x = inv_log_spectrogram(log_x)
 
     assert (np.linalg.norm(inv_log_x - x_mel) < 0.08)
