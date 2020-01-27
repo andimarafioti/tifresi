@@ -58,8 +58,8 @@ class GaussTF(object):
 
         tgrad, fgrad = modgabphasegrad('abs', spectrogram, g_analysis, hop_size,
                                        stft_channels)
-        a_min = np.exp(-10) * np.max(spectrogram)
-        logMagSpectrogram = np.log(np.clip(spectrogram.astype(np.float64), a_min=a_min, a_max=None))
+        minimum_relative_amplitude = np.exp(-10) * np.max(spectrogram)
+        logMagSpectrogram = np.log(np.clip(spectrogram.astype(np.float64), a_min=minimum_relative_amplitude, a_max=None))
         phase = pghi(logMagSpectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length, tol=10)
 
         reComplexStft = (np.e ** logMagSpectrogram) * np.exp(1.0j * phase)
