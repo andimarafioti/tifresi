@@ -11,7 +11,7 @@ class HParams(object):
     stft_channels = 1024 # Number of frequency channels
     hop_size = 256 # Hop size
     
-    stft_dB = 50 # Number of dB for the STFT
+    stft_dynamic_range_dB = 50 # dynamic range in dB for the STFT
     normalize = True # Normalize STFT
     
     # MEL parameters
@@ -19,6 +19,6 @@ class HParams(object):
     fmin = 0 # Minimum frequency for the MEL
     fmax = None # Maximum frequency for the MEL (None -> Nyquist frequency)
     
-    mel_dB = 50 # Number of dB for the MEL
+    mel_dynamic_range_dB = 50 # dynamic range in dB for the MEL
     
     mel_basis = librosa.filters.mel(sr=sr, n_fft=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax)

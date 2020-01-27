@@ -5,11 +5,11 @@ from hparams import HParams as p
 __author__ = 'Andres'
 
 
-def log_spectrogram(spectrogram, dB=p.stft_dB):
+def log_spectrogram(spectrogram, dynamic_range_dB=p.mel_dynamic_range_dB):
     """Compute the log spectrogram representation from a spectrogram."""
     spectrogram = np.abs(spectrogram)  # for safety
-    a_min = np.max(spectrogram) / 10 ** (dB / 10)
-    return 10 * np.log10(np.clip(spectrogram, a_min=a_min, a_max=None))
+    minimum_relative_amplitude = np.max(spectrogram) / 10 ** (dynamic_range_dB / 10)
+    return 10 * np.log10(np.clip(spectrogram, a_min=minimum_relative_amplitude, a_max=None))
 
 
 def inv_log_spectrogram(log_spec):
@@ -17,11 +17,12 @@ def inv_log_spectrogram(log_spec):
     return 10 ** (log_spec / 10)
 
 
-def log_mel_spectrograms(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr, dB=p.mel_dB):
+def log_mel_spectrograms(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr,
+                         dynamic_range_dB=p.mel_dynamic_range_dB):
     """Compute the log mel spectrogram from a spectrogram."""
     melSpectrogram = mel_spectrogram(spectrogram, stft_channels=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax,
                                      sr=sr)
-    minimum_relative_amplitude = np.max(melSpectrogram) / 10 ** (dB / 10)
+    minimum_relative_amplitude = np.max(melSpectrogram) / 10 ** (dynamic_range_dB / 10)
     return 10 * np.log10(np.clip(melSpectrogram, a_min=minimum_relative_amplitude, a_max=None))
 
 
