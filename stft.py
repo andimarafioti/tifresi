@@ -4,6 +4,7 @@ from hparams import HParams as p
 
 from modGabPhaseGrad import modgabphasegrad
 from pghi import pghi
+from transforms import log_spectrogram
 
 
 class GaussTF(object):
@@ -58,8 +59,7 @@ class GaussTF(object):
 
         tgrad, fgrad = modgabphasegrad('abs', spectrogram, g_analysis, hop_size,
                                        stft_channels)
-        minimum_relative_amplitude = np.exp(-10) * np.max(spectrogram)
-        logMagSpectrogram = np.log(np.clip(spectrogram.astype(np.float64), a_min=minimum_relative_amplitude, a_max=None))
+        logMagSpectrogram = log_spectrogram(spectrogram, dynamic_range_dB=50) * np.log(10)
         phase = pghi(logMagSpectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length, tol=10)
 
         reComplexStft = (np.e ** logMagSpectrogram) * np.exp(1.0j * phase)

@@ -5,7 +5,7 @@ from hparams import HParams as p
 __author__ = 'Andres'
 
 
-def log_spectrogram(spectrogram, dynamic_range_dB=p.mel_dynamic_range_dB):
+def log_spectrogram(spectrogram, dynamic_range_dB=p.stft_dynamic_range_dB):
     """Compute the log spectrogram representation from a spectrogram."""
     spectrogram = np.abs(spectrogram)  # for safety
     minimum_relative_amplitude = np.max(spectrogram) / 10 ** (dynamic_range_dB / 10)
@@ -22,8 +22,7 @@ def log_mel_spectrogram(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_m
     """Compute the log mel spectrogram from a spectrogram."""
     melSpectrogram = mel_spectrogram(spectrogram, stft_channels=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax,
                                      sr=sr)
-    minimum_relative_amplitude = np.max(melSpectrogram) / 10 ** (dynamic_range_dB / 10)
-    return 10 * np.log10(np.clip(melSpectrogram, a_min=minimum_relative_amplitude, a_max=None))
+    return log_spectrogram(melSpectrogram, dynamic_range_dB)
 
 
 def mel_spectrogram(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr):
