@@ -45,15 +45,14 @@ class GaussTF(object):
         g_synthesis = {'name': ('dual', g_analysis['name']), 'tfr': tfr}
         return ltfatpy.idgtreal(X.astype(np.complex128), g_synthesis, hop_size, stft_channels)[0]
 
-    def invert_spectrogram(self, spectrogram, audio_length=None, stft_channels=None, hop_size=None):
+    def invert_spectrogram(self, spectrogram, stft_channels=None, hop_size=None):
         """Invert a spectrogram by reconstructing the phase with PGHI."""
         if hop_size is None:
             hop_size = self.hop_size
         if stft_channels is None:
             stft_channels = self.stft_channels
-        if audio_length is None:
-            audio_length = hop_size * spectrogram.shape[1]
 
+        audio_length = hop_size * spectrogram.shape[1]
         tfr = self.hop_size * self.stft_channels / audio_length
         g_analysis = {'name': 'gauss', 'tfr': tfr}
 
