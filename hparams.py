@@ -1,4 +1,5 @@
 import librosa
+import numpy as np
 
 
 class HParams(object):
@@ -22,3 +23,4 @@ class HParams(object):
     mel_dynamic_range_dB = 50 # dynamic range in dB for the MEL
     
     mel_basis = librosa.filters.mel(sr=sr, n_fft=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax)
+    mel_inverse_basis = np.linalg.pinv(mel_basis)

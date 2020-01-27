@@ -32,3 +32,13 @@ def mel_spectrogram(spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels,
     else:
         mel_basis = p.mel_basis
     return np.dot(mel_basis, spectrogram)
+
+
+def pseudo_unmel_spectrogram(mel_spectrogram, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr):
+    """Compute the inverse mel spectrogram from a mel spectrogram."""
+    if stft_channels != p.stft_channels or n_mels != p.n_mels or fmin != p.fmin or fmax != p.fmax or sr != p.sr:
+        mel_basis = librosa.filters.mel(sr=sr, n_fft=stft_channels, n_mels=n_mels, fmin=fmin, fmax=fmax)
+        mel_inverse_basis = np.linalg.pinv(mel_basis)
+    else:
+        mel_inverse_basis = p.mel_inverse_basis
+    return np.matmul(mel_inverse_basis, mel_spectrogram)
