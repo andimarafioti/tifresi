@@ -27,7 +27,7 @@ class GaussTF(object):
         assert (np.mod(len(x), hop_size) == 0)
         assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (np.mod(len(x), stft_channels) == 0)
-        g_analysis = {'name': 'gauss', 'tfr': self.hop_size * self.stft_channels / len(x)}
+        g_analysis = self._analysis_window(x)
         return ltfatpy.dgtreal(x.astype(np.float64), g_analysis, hop_size, stft_channels)[0]
 
     def idgt(self, X, hop_size=None, stft_channels=None):
@@ -39,10 +39,7 @@ class GaussTF(object):
         assert (len(X.shape) == 2)
         assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (X.shape[0] == stft_channels // 2 + 1)
-        L = hop_size * X.shape[1]
-        tfr = self.hop_size * self.stft_channels / L
-        g_analysis = {'name': 'gauss', 'tfr': tfr}
-        g_synthesis = {'name': ('dual', g_analysis['name']), 'tfr': tfr}
+        g_synthesis = self._synthesis_window(X, hop_size)
         return ltfatpy.idgtreal(X.astype(np.complex128), g_synthesis, hop_size, stft_channels)[0]
 
     def invert_spectrogram(self, spectrogram, stft_channels=None, hop_size=None):
@@ -73,3 +70,12 @@ class GaussTF(object):
         if normalize:
             magSpectrogram = magSpectrogram / np.max(magSpectrogram)
         return magSpectrogram
+
+    def _analysis_window(self, x):
+        return {'name': 'gauss', 'tfr': self.hop_size * self.stft_channels / len(x)}
+
+    def _synthesis_window(self, X, hop_size):
+        L = hop_size * X.shape[1]
+        tfr = self.hop_size * self.stft_channels / L
+        g_analysis = {'name': 'gauss', 'tfr': tfr}
+        return {'name': ('dual', g_analysis['name']), 'tfr': tfr}
