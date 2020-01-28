@@ -4,7 +4,6 @@ from hparams import HParams as p
 
 from modGabPhaseGrad import modgabphasegrad
 from pghi import pghi
-from transforms import log_spectrogram
 
 
 class GaussTF(object):
