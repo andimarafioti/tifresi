@@ -59,7 +59,7 @@ class GaussTF(object):
 
         tgrad, fgrad = modgabphasegrad('abs', spectrogram, g_analysis, hop_size,
                                        stft_channels)
-        phase = pghi(spectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length, tol=10)
+        phase = pghi(spectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length)
 
         reComplexStft = spectrogram * np.exp(1.0j * phase)
 
