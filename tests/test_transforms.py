@@ -61,3 +61,10 @@ def test_mel_spectrogram():
 
     assert (np.linalg.norm(x_test_mel - x_mel) < 1e-20)
 
+
+if __name__ == "__main__":
+    test_log_spectrogram()
+    test_log_spectrogram_small_range()
+    test_log_mel_spectrogram()
+    test_log_mel_spectrogram_small_range()
+    test_mel_spectrogram()

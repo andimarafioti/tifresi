@@ -61,3 +61,4 @@ def test_stft_different_channels():
 if __name__ == "__main__":
     test_stft_different_length()
     test_stft_different_hop_size()
+    test_stft_different_channels()
