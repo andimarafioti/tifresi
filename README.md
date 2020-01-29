@@ -103,6 +103,3 @@ Demo
     6. Recontruct the signal
     7. Listen to the signals
 
-
-# What should be removed
-`audioLoader.py` and `ltfatSTFT.py` should be merged with the rest... I believe
