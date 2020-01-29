@@ -23,7 +23,6 @@ def pghi(spectrogram, tgrad, fgrad, a, M, L, mask, tol=1e-7, phase=None):
     abstol = np.exp(-20)
 
     masked_x, masked_y = np.where(mask == 1)
-    print(len(masked_x))
     for x, y in zip(masked_x, masked_y):
         spectrogram[x, y] = abstol  # Do not integrate over the mask
 
@@ -49,7 +48,6 @@ def pghi(spectrogram, tgrad, fgrad, a, M, L, mask, tol=1e-7, phase=None):
     spectrogram[max_pos] = abstol
 
     small_x, small_y = np.where(spectrogram < max_val * tol)
-    print(len(small_x))
     for x, y in zip(small_x, small_y):
         spectrogram[x, y] = abstol  # Do not integrate over silence
 
