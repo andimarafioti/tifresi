@@ -15,14 +15,13 @@ class GaussTruncTF(GaussTF):
         self.min_height = min_height
 
     def _analysis_window(self, x):
-        Lg = np.round(np.sqrt(- 4 * self.hop_size * self.stft_channels * np.log(self.min_height) / np.pi))
+        Lgtrue = np.sqrt(-4 * self.hop_size * self.stft_channels * np.log(self.min_height) / np.pi)
+        LgLong = np.ceil(Lgtrue / self.stft_channels) * self.stft_channels
 
-        if np.mod(Lg, 2) == 0:
-            x = np.concatenate([np.arange(0, .5 - 1 / Lg, 1 / Lg), np.arange(-.5, -1 / Lg, 1 / Lg)])
-        else:
-            x = np.concatenate([np.arange(0, .5 - .5 / Lg, 1 / Lg), np.arange(-.5+.5/Lg, -1 / Lg, 1 / Lg)])
-
-        return np.exp(4 * np.log(self.min_height) * (x ** 2))
+        x = (1 / Lgtrue) * np.concatenate([np.arange(0, .5 * LgLong - 1), np.arange(-.5 * LgLong, -1)])
+        g = np.exp(4 * np.log(self.min_height) * (x ** 2))
+        g = g / np.linalg.norm(g)
+        return g
 
     def _synthesis_window(self, X, hop_size):
         g_analysis = self._analysis_window(None)
