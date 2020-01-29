@@ -1,6 +1,45 @@
 # stft4pghi
 STFT transforms suitable for use with PGHI (phase gradient heap integration)
 
+## Installation
+
+This repository use the ltfatpy packages that requires a few libraries to be installed. 
+
+1. Be sure that cmake is installed
+   * On debian based unix system:
+    ```
+    sudo apt-get install cmake
+    ```
+   * On MacOS X using homebrew:
+    ```
+    brew install cmake
+    ```
+   * On MacOS X using port:
+    ```
+    sudo port install cmake
+    ```
+2. Install `fftw3` and `lapack`
+   * On debian based unix system:
+    ```
+    sudo apt-get install libfftw3-dev liblapack-dev
+    ```
+   * On MacOS X using homebrew:
+    ```
+    brew install fftw lapack
+    ```
+   * On MacOS X using port:
+    ```
+    sudo port install fftw-3 fftw-3-single lapack
+    ```
+3. Install cython (required for installing ltfatpy):
+    ```
+    pip install -r cython
+    ```      
+4. Install the requirements (You probably wants to create a virtual environment first)
+    ```
+    pip install -r requirements
+    ```    
+
 # Structure of this repository
 
 Main files
