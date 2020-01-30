@@ -4,14 +4,16 @@ sys.path.append('../')
 
 import numpy as np
 
-from stft import GaussTF
+from stft import GaussTF, GaussTruncTF
 
 
-def test_stft_different_length():
-    a = 128
-    M = 1024
-    tfsystem = GaussTF(a, M)
+def test_stft_different_length(a = 128, M = 1024, trunc=False):
     L = 128 * 1024
+    if trunc:
+        tfsystem = GaussTruncTF(a, M)        
+    else:
+        tfsystem = GaussTF(a, M)
+
     x = np.random.rand(L) * 2 - 1
     x = x / np.linalg.norm(x)
     x[:8 * M] = 0
@@ -21,15 +23,22 @@ def test_stft_different_length():
     xdot = tfsystem.idgt(X)
     X2 = tfsystem.dgt(x2)
     x2dot = tfsystem.idgt(X2)
-    assert (np.linalg.norm(xdot - x) < 1e-12)
-    assert (np.linalg.norm(x2dot - x2) < 1e-12)
-    assert (np.sum(np.abs(X2[:, :X.shape[1]] - X)) < 1e-6)
+    if trunc:
+        assert (np.linalg.norm(xdot - x) < 1e-10)
+        assert (np.linalg.norm(x2dot - x2) < 1e-10)
+        assert (np.sum(np.abs(X2[:, :X.shape[1]] - X)) < 1e-6)
+    else:
+        assert (np.linalg.norm(xdot - x) < 1e-12)
+        assert (np.linalg.norm(x2dot - x2) < 1e-12)
+        assert (np.sum(np.abs(X2[:, :X.shape[1]] - X)) < 1e-6)
 
 
-def test_stft_different_hop_size():
-    hop_size = 128
-    M = 1024
-    tfsystem = GaussTF(hop_size, M)
+def test_stft_different_hop_size(a = 128, M = 1024, trunc=False):
+    hop_size = a
+    if trunc:
+        tfsystem = GaussTruncTF(hop_size, M)        
+    else:
+        tfsystem = GaussTF(hop_size, M)
     L = 128 * 1024
     x = np.random.rand(L) * 2 - 1
     x = x / np.linalg.norm(x)
@@ -38,14 +47,20 @@ def test_stft_different_hop_size():
     assert (np.sum(np.abs(X256 - X128[:, ::2])) < 1e-12)
     x256dot = tfsystem.idgt(X256, hop_size=256)
     x128dot = tfsystem.idgt(X128, hop_size=128)
-    assert (np.linalg.norm(x128dot - x) < 1e-12)
-    assert (np.linalg.norm(x256dot - x) < 1e-12)
-
-
-def test_stft_different_channels():
-    hop_size = 128
-    stft_channels = 1024
-    tfsystem = GaussTF(hop_size, stft_channels)
+    if trunc:
+        assert (np.linalg.norm(x128dot - x) < 1e-10)
+        assert (np.linalg.norm(x256dot - x) < 1e-10)
+    else:
+        assert (np.linalg.norm(x128dot - x) < 1e-12)
+        assert (np.linalg.norm(x256dot - x) < 1e-12)
+        
+def test_stft_different_channels(a = 128, M = 1024, trunc=False):
+    hop_size = a
+    stft_channels = M
+    if trunc:
+        tfsystem = GaussTruncTF(hop_size, stft_channels)        
+    else:
+        tfsystem = GaussTF(hop_size, stft_channels)
     L = 128 * 1024
     x = np.random.rand(L) * 2 - 1
     x = x / np.linalg.norm(x)
@@ -54,11 +69,23 @@ def test_stft_different_channels():
     assert (np.sum(np.abs(X512 - X1024[::2, :])) < 1e-12)
     x1024dot = tfsystem.idgt(X1024, stft_channels=1024)
     x512dot = tfsystem.idgt(X512, stft_channels=512)
-    assert (np.linalg.norm(x1024dot - x) < 1e-12)
-    assert (np.linalg.norm(x512dot - x) < 1e-12)
+    if trunc:
+        assert (np.linalg.norm(x1024dot - x) < 1e-5)
+        assert (np.linalg.norm(x512dot - x) < 1e-5)        
+    else:
+        assert (np.linalg.norm(x1024dot - x) < 1e-12)
+        assert (np.linalg.norm(x512dot - x) < 1e-12)
 
 
 if __name__ == "__main__":
-    test_stft_different_length()
-    test_stft_different_hop_size()
-    test_stft_different_channels()
+    combinations = [
+        (128, 1024),
+        (128, 512),
+        (256, 1024)
+    ]
+    for trunc in [True, False]:
+        for a,M in combinations:
+            print("Test combination {},{},{}".format(trunc, a,M))
+            test_stft_different_length(a,M, trunc)
+            test_stft_different_hop_size(a,M, trunc)
+            test_stft_different_channels(a,M, trunc)

@@ -4,3 +4,4 @@ matplotlib
 jupyterlab
 ltfatpy
 numba
+librosa

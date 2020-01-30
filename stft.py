@@ -1,4 +1,6 @@
-import ltfatpy
+import safepyplot
+from ltfatpy import dgtreal, idgtreal
+from ltfatpy.gabor.gabdual import gabdual
 import numpy as np
 from hparams import HParams as p
 
@@ -28,7 +30,7 @@ class GaussTF(object):
         assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (np.mod(len(x), stft_channels) == 0)
         g_analysis = self._analysis_window(x)
-        return ltfatpy.dgtreal(x.astype(np.float64), g_analysis, hop_size, stft_channels)[0]
+        return dgtreal(x.astype(np.float64), g_analysis, hop_size, stft_channels)[0]
 
     def idgt(self, X, hop_size=None, stft_channels=None):
         """Compute the inverse DGT of real signal x with a gauss window."""
@@ -39,8 +41,8 @@ class GaussTF(object):
         assert (len(X.shape) == 2)
         assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
         assert (X.shape[0] == stft_channels // 2 + 1)
-        g_synthesis = self._synthesis_window(X, hop_size)
-        return ltfatpy.idgtreal(X.astype(np.complex128), g_synthesis, hop_size, stft_channels)[0]
+        g_synthesis = self._synthesis_window(X, hop_size, stft_channels)
+        return idgtreal(X.astype(np.complex128), g_synthesis, hop_size, stft_channels)[0]
 
     def invert_spectrogram(self, spectrogram, stft_channels=None, hop_size=None):
         """Invert a spectrogram by reconstructing the phase with PGHI."""
@@ -74,8 +76,31 @@ class GaussTF(object):
     def _analysis_window(self, x):
         return {'name': 'gauss', 'tfr': self.hop_size * self.stft_channels / len(x)}
 
-    def _synthesis_window(self, X, hop_size):
+    def _synthesis_window(self, X, hop_size, stft_channels):
         L = hop_size * X.shape[1]
         tfr = self.hop_size * self.stft_channels / L
         g_analysis = {'name': 'gauss', 'tfr': tfr}
         return {'name': ('dual', g_analysis['name']), 'tfr': tfr}
+
+    
+
+class GaussTruncTF(GaussTF):
+    """Time frequency transform object based on a Truncated Gauss window.
+    """
+
+    def __init__(self, hop_size=p.hop_size, stft_channels=p.stft_channels, min_height=1e-4):
+        super().__init__(hop_size, stft_channels)
+        self.min_height = min_height
+
+    def _analysis_window(self, x):
+        Lgtrue = np.sqrt(-4 * self.hop_size * self.stft_channels * np.log(self.min_height) / np.pi)
+        LgLong = np.ceil(Lgtrue / self.stft_channels) * self.stft_channels
+
+        x = (1 / Lgtrue) * np.concatenate([np.arange(.5 * LgLong), np.arange(-.5 * LgLong, 0)])
+        g = np.exp(4 * np.log(self.min_height) * (x ** 2))
+        g = g / np.linalg.norm(g)
+        return g
+
+    def _synthesis_window(self, X, hop_size, stft_channels):
+        g_analysis = self._analysis_window(None)
+        return gabdual(g_analysis, hop_size, stft_channels, 8*max(stft_channels, self.stft_channels))
