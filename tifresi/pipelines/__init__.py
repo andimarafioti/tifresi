@@ -1,1 +1,1 @@
-from . import LJspeech
+from tifresi.pipelines import LJspeech

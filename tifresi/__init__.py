@@ -5,7 +5,7 @@ except:
     mpl.use('Agg')
     import matplotlib.pyplot as pyplot
     
-from . import stft
-from . import hparams
-from . import metrics
-from . import utils
+from tifresi import stft
+from tifresi import hparams
+from tifresi import metrics
+from tifresi import utils
