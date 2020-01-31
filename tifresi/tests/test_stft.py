@@ -1,10 +1,10 @@
 import sys
 
-sys.path.append('../')
+# sys.path.append('../')
 
 import numpy as np
 
-from stft import GaussTF, GaussTruncTF
+from tifresi.stft import GaussTF, GaussTruncTF
 
 
 def test_stft_different_length(a = 128, M = 1024, trunc=False):
@@ -76,8 +76,7 @@ def test_stft_different_channels(a = 128, M = 1024, trunc=False):
         assert (np.linalg.norm(x1024dot - x) < 1e-12)
         assert (np.linalg.norm(x512dot - x) < 1e-12)
 
-
-if __name__ == "__main__":
+def main():
     combinations = [
         (128, 1024),
         (128, 512),
@@ -89,3 +88,6 @@ if __name__ == "__main__":
             test_stft_different_length(a,M, trunc)
             test_stft_different_hop_size(a,M, trunc)
             test_stft_different_channels(a,M, trunc)
+
+if __name__ == "__main__":
+    main()

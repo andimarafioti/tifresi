@@ -2,8 +2,8 @@ import librosa
 import numpy as np
 import sys
 
-sys.path.append('../')
-from transforms import log_spectrogram, inv_log_spectrogram, log_mel_spectrogram, mel_spectrogram
+# sys.path.append('../')
+from tifresi.transforms import log_spectrogram, inv_log_spectrogram, log_mel_spectrogram, mel_spectrogram
 
 __author__ = 'Andres'
 

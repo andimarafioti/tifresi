@@ -1,11 +1,10 @@
-import safepyplot
 from ltfatpy import dgtreal, idgtreal
 from ltfatpy.gabor.gabdual import gabdual
 import numpy as np
-from hparams import HParams as p
+from tifresi.hparams import HParams as p
 
-from modGabPhaseGrad import modgabphasegrad
-from pghi import pghi
+from tifresi.phase.modGabPhaseGrad import modgabphasegrad
+from tifresi.phase.pghi import pghi
 
 
 class GaussTF(object):

@@ -59,7 +59,7 @@ After installation of the requirements, you can check the following notebooks:
 * `metrics.py`: compute metrics to evaluate phase and spectrogram quality
 * `transforms.py`: useful simple transform function for spectrograms
 * `hparams.py`: default parameters
-* `src`: folder containing source code for phase reconstruction using pghi
+* `phase`: folder containing source code for phase reconstruction using pghi
     - TODO : create the folder and move files
 * `tests`: folder containing all tests
 

@@ -1,6 +1,6 @@
 import librosa
 import numpy as np
-from hparams import HParams as p
+from tifresi.hparams import HParams as p
 
 __author__ = 'Andres'
 

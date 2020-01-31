@@ -1,6 +1,8 @@
 import numpy as np
 import librosa
-from hparams import HParams as p
+from tifresi.hparams import HParams as p
+
+
 
 # This function might need another name
 def preprocess_signal(y, M=p.M):
