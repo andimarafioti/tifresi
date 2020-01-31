@@ -1,1 +1,1 @@
-import LJspeech
+from . import LJspeech
