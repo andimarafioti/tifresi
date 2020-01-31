@@ -40,14 +40,32 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     pip install -r requirements
     ```    
 
-# Structure of this repository
+## Starting
+After installation of the requirements, you can check the following notebooks:
+* `demo.ipynb` illustrates how to construct a spectrogram and invert it.
+* `demo-mel.ipynb` illustrates how to compute a mel spectrogram with the setting used in this repository.
 
-Main files
-* `utils.py`: Utility to load, preprocess, downsample, ... the signal
+
+
+
+#### Main files
+* `utils.py`: Utility to load, preprocess, downsample the signal
 * `stft.py`: core objects 
-    1. TFGauss: to compute and invert the STFT
-    2. 
-* `params.py`: default parameters
+    1. TFGauss: to compute and invert the STFT with a full Gaussian window
+    2. GaussTruncTF: to compute and invert the STFT with a truncated Gaussian window  (faster)
+* `metrics.py`: compute metrics to evaluate phase and spectrogram quality
+* `transforms.py`: useful simple transform function for spectrograms
+* `hparams.py`: default parameters
+* `src`: folder containing source code for phase reconstruction using pghi
+    - TODO : create the folder and move files
+* `tests`: folder containing all tests
+
+    
+
+
+#### To be done 
+* Create a package
+
 * `preprocess.py`: contain the main function for the signal (maybe something like this, also maybe to be merged with utils.py)
     ```
     def make_spectrograms(y, a, M, n_mels, sr=22050):
@@ -84,22 +102,4 @@ Main files
         return mel, mag
 
     ```
-* `generator.py`: maybe a generator for training NN... (I am not sure)
-    
-Secondary files
-* `tests`: folder containing all tests
-* `plot.py`: plotting function (also for listening audio in notebook)
-* `src`: source folder containting code that probably does not interest the user
-    1. `pghi.py`
-    2. `modGraphPhase.py`
-
-Demo
-* `demo.ipynb`: demo notebook
-    1. Load a signal from path
-    2. Light preprocess
-    3. Compute TF
-    4. Compute phase using PGHI
-    5. Compute losses
-    6. Recontruct the signal
-    7. Listen to the signals
 
