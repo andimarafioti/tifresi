@@ -18,7 +18,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        udo pt-get install cmake libfftw3-dev liblapack-dev
+        sudo apt-get install cmake libfftw3-dev liblapack-dev
         python -m pip install --upgrade pip
         pip install cython
         pip install -r requirements.txt
