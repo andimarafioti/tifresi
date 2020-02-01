@@ -49,7 +49,23 @@ After installation of the requirements, you can check the following notebooks:
 * `demo-mel.ipynb` illustrates how to compute a mel spectrogram with the setting used in this repository.
 
 
-
+## Developing
+As a developer, you can test the package using `pytest`:
+```
+pip install pytest
+```
+Then run tests using
+```
+pytest tifresi
+```
+You can also use the source code checker `flake8`:
+```
+pip install flake8
+```
+Then run tests using
+```
+flake8 .
+```
 
 #### Main files
 * `utils.py`: Utility to load, preprocess, downsample the signal
@@ -63,11 +79,12 @@ After installation of the requirements, you can check the following notebooks:
     - TODO : create the folder and move files
 * `tests`: folder containing all tests
 
-    
 
-
-#### To be done 
-* Create a package
+#### TODO
+* Add reference and links
+* Put the package on pypi
+* Improve doc
+* Put the documentation on readthedoc or somthing similar
 
 
 
