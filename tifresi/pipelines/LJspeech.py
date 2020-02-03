@@ -35,11 +35,9 @@ def compute_mag_mel(y):
     assert(np.min(mag)>=0)    
     
     mel = log_spectrogram(mel, dynamic_range_dB=p.mel_dynamic_range_dB)/p.mel_dynamic_range_dB+1
-
     # Reduction rate
     if p.reduction_rate > 1:
         mel = downsample_tf_time(mel, p.reduction_rate)
-    
     # Float32
     mel = mel.astype(np.float32)
     mag = mag.astype(np.float32) 
