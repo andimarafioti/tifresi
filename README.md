@@ -36,12 +36,18 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     ```
 3. Install cython (required for installing ltfatpy):
     ```
-    pip install -r cython
+    pip install cython
     ```      
 4. Install the requirements (You probably wants to create a virtual environment first)
     ```
-    pip install -r requirements
+    pip install -r requirements.txt
     ```    
+5. Clone this repository and install it 
+    ```
+    git clone https://github.com/nperraud/stft4pghi.git
+    cd stft4pghi
+    pip install .
+    ```       
 
 ## Starting
 After installation of the requirements, you can check the following notebooks:
