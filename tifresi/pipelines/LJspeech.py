@@ -1,37 +1,47 @@
 import numpy as np
 import librosa
-from tifresi.stft import GaussTF
+from tifresi.stft import GaussTF, GaussTruncTF
+from tifresi.pipelines.LJparams import LJParams as p
+from tifresi.transforms import mel_spectrogram, log_spectrogram
+from tifresi.utils import downsample_tf_time, preprocess_signal, load_signal
 
+def compute_mag_mel_from_path(path):
+    y, sr = load_signal(path, p.sr)
+    y = preprocess_signal(y, p.M)
+    return compute_mag_mel(y)
 
-def make_spectrograms(y, a, M, n_mels, sr=22050):
-    '''Parse the wave file in `fpath` and
-    Returns normalized melspectrogram and linear spectrogram.
+def compute_mag_mel(y):
+    '''Compute spectrogram and MEL spectrogram from signal.
     Args:
-      y  : sound file
+      y  : signal
     Returns:
       mel: A 2d array of shape (T, n_mels) and dtype of float32.
-      mag: A 2d array of shape (T, 1+n_fft/2) and dtype of float32.
+      mag: A 2d array of shape (T, 1+stft_channels/2) and dtype of float32.
     '''
-
-    tfsystem = GaussTF(a=a, M=M)
-    linear = tfsystem.dgt(y)
-
+    if p.use_truncated:
+        tfsystem = GaussTruncTF(hop_size=p.hop_size, stft_channels=p.stft_channels)
+    else:
+        tfsystem = GaussTF(hop_size=p.hop_size, stft_channels=p.stft_channels)
+        
     # magnitude spectrogram
-    mag = np.abs(linear)  # (1+n_fft//2, T)
-    mag = mag/np.max(mag)
+    mag = tfsystem.spectrogram(y, normalize=p.normalize)
 
     # mel spectrogram
-    mel_basis = librosa.filters.mel(sr, M, n_mels)  # (n_mels, 1+n_fft//2)
-    mel = np.dot(mel_basis, mag)  # (n_mels, t)
+    mel = mel_spectrogram(mag, stft_channels=p.stft_channels, n_mels=p.n_mels, fmin=p.fmin, fmax=p.fmax, sr=p.sr)
 
     # to decibel
-    mel = np.log10(np.maximum(1e-5, mel))/2.5+1
-    mag = np.log10(np.maximum(1e-5, mag))/2.5+1
+    mag = log_spectrogram(mag, dynamic_range_dB=p.stft_dynamic_range_dB)/p.stft_dynamic_range_dB+1
     assert(np.max(mag)<=1)
-    assert(np.min(mag)>=-1)    
+    assert(np.min(mag)>=0)    
+    
+    mel = log_spectrogram(mel, dynamic_range_dB=p.mel_dynamic_range_dB)/p.mel_dynamic_range_dB+1
 
-    # Transpose
-    mel = mel.astype(np.float32)  # (T, n_mels)
-    mag = mag.astype(np.float32)  # (T, 1+n_fft//2)
+    # Reduction rate
+    if p.reduction_rate > 1:
+        mel = downsample_tf_time(mel, p.reduction_rate)
+    
+    # Float32
+    mel = mel.astype(np.float32)
+    mag = mag.astype(np.float32) 
 
     return mel, mag
