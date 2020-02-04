@@ -1,3 +1,4 @@
+import setuptools
 from setuptools import setup
 
 setup(name='tifresi',
@@ -7,5 +8,5 @@ setup(name='tifresi',
       author='Andrés Marafioti, Nathanael Perraudin, Nicki Hollighaus',
       author_email='nathanael (dot) perraudin (at) sdsc (dot) ethz (dot) ch',
       license='MIT',
-      packages=setup.find_packages(),
+      packages=setuptools.find_packages(),
       zip_safe=False)
