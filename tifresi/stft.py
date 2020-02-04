@@ -3,7 +3,6 @@ from ltfatpy.gabor.gabdual import gabdual
 import numpy as np
 from tifresi.hparams import HParams as p
 
-import tifresi.phase
 from tifresi.phase.modGabPhaseGrad import modgabphasegrad
 from tifresi.phase.pghi import pghi
 

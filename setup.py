@@ -7,5 +7,5 @@ setup(name='tifresi',
       author='Andrés Marafioti, Nathanael Perraudin, Nicki Hollighaus',
       author_email='nathanael (dot) perraudin (at) sdsc (dot) ethz (dot) ch',
       license='MIT',
-      packages=['tifresi'],
+      packages=setup.find_packages(),
       zip_safe=False)
