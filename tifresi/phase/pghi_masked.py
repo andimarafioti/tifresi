@@ -20,7 +20,7 @@ def pghi(spectrogram, tgrad, fgrad, a, M, L, mask, tol=1e-7, phase=None):
     spectrogram = spectrogram.copy()
     if phase is None:
         phase = np.zeros_like(spectrogram)
-    abstol = np.exp(-20)
+    abstol = np.array([1e-10], dtype=spectrogram.dtype)[0]  # if abstol is not the same type as spectrogram then casting occurs
 
     masked_x, masked_y = np.where(mask == 1)
     for x, y in zip(masked_x, masked_y):

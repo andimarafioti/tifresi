@@ -15,7 +15,7 @@ def pghi(spectrogram, tgrad, fgrad, a, M, L, tol=1e-7):
     tol = tolerance under the max value of the spectrogram
     """
     spectrogram = spectrogram.copy()
-    abstol = np.exp(-20)
+    abstol = np.array([1e-10], dtype=spectrogram.dtype)[0]  # if abstol is not the same type as spectrogram then casting occurs
     phase = np.zeros_like(spectrogram)
     max_val = np.amax(spectrogram)  # Find maximum value to start integration
     max_x, max_y = np.where(spectrogram == max_val)
