@@ -1,4 +1,5 @@
 import numpy as np
+from tifresi.transforms import inv_log_spectrogram
 
 __author__ = 'Andres'
 
@@ -9,7 +10,9 @@ def projection_loss(target_spectrogram, original_spectrogram):
     return 20 * np.log10(1 / magnitude_error)
 
 
-def consistency(log_spectrogram):
+def consistency(log10_spectrogram):
+    log_spectrogram = np.log(inv_log_spectrogram(log10_spectrogram))
+
     ttderiv = log_spectrogram[1:-1, :-2] - 2 * log_spectrogram[1:-1, 1:-1] + log_spectrogram[1:-1, 2:] + np.pi / 4
     ffderiv = log_spectrogram[:-2, 1:-1] - 2 * log_spectrogram[1:-1, 1:-1] + log_spectrogram[2:, 1:-1] + np.pi / 4
 
