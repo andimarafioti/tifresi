@@ -44,8 +44,8 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     ```    
 5. Clone this repository and install it 
     ```
-    git clone https://github.com/nperraud/stft4pghi.git
-    cd stft4pghi
+    git clone https://github.com/andimarafioti/tifresi
+    cd tifresi
     pip install .
     ```       
 
