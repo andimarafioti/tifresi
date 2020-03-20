@@ -2,8 +2,6 @@
 'tifresi' to be pronounced 'tifreeezy' provide a simple implementation of TF and spectrogam suitable for inversion, i.e. with a high quality phase recovery.
 The phase recovery algorithm used is PGHI (phase gradient heap integration).
 
-TODO: Put references ...
-
 ## Installation
 
 This repository use the ltfatpy packages that requires a few libraries to be installed. 
@@ -115,7 +113,7 @@ flake8 .
 
 
 #### TODO
-* Add reference and links
+* Add links to papers
 * Put the package on pypi
 * Improve doc
 * Put the documentation on readthedoc or somthing similar
