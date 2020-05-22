@@ -1,9 +1,11 @@
 import setuptools
-from setuptools import setup
 
-setup(
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
     name='tifresi',
-    version='0.1.2',
+    version='0.1.3',
     description='Time Frequency Spectrogram Inversion',
     url='https://github.com/andimarafioti/tifresi',
     author='Andrés Marafioti, Nathanael Perraudin, Nicki Hollighaus',
