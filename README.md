@@ -27,7 +27,7 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     ```
     pip install tifresi
     ```   
-  or from source
+    or from source
     ```
     git clone https://github.com/andimarafioti/tifresi
     cd tifresi
