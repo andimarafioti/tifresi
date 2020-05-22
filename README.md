@@ -4,43 +4,30 @@ The phase recovery algorithm used is PGHI (phase gradient heap integration).
 
 ## Installation
 
-This repository use the ltfatpy packages that requires a few libraries to be installed. 
+This repository use the ltfatpy packages that requires a few libraries to be installed. The package relies on some library that have to be installed beforehands.
 
-1. Be sure that cmake is installed
+1. Install `fftw3`, `lapack` and `cmake`
    * On debian based unix system:
     ```
-    sudo apt-get install cmake
+    sudo apt-get install libfftw3-dev liblapack-dev cmake
     ```
    * On MacOS X using homebrew:
     ```
-    brew install cmake
+    brew install fftw lapack cmake
     ```
    * On MacOS X using port:
     ```
-    sudo port install cmake
+    sudo port install fftw-3 fftw-3-single lapack cmake
     ```
-2. Install `fftw3` and `lapack`
-   * On debian based unix system:
-    ```
-    sudo apt-get install libfftw3-dev liblapack-dev
-    ```
-   * On MacOS X using homebrew:
-    ```
-    brew install fftw lapack
-    ```
-   * On MacOS X using port:
-    ```
-    sudo port install fftw-3 fftw-3-single lapack
-    ```
-3. Install cython (required for installing ltfatpy):
+2. Install cython (required for installing ltfatpy):
     ```
     pip install cython
-    ```      
-4. Install the requirements (You probably wants to create a virtual environment first)
     ```
-    pip install -r requirements.txt
-    ```    
-5. Clone this repository and install it 
+3. Install the package from pypi
+    ```
+    pip install tifresi
+    ```   
+  or from source
     ```
     git clone https://github.com/andimarafioti/tifresi
     cd tifresi
@@ -99,21 +86,8 @@ Then run tests using
 flake8 .
 ```
 
-#### Main files
-* `utils.py`: Utility to load, preprocess, downsample the signal
-* `stft.py`: core objects 
-    1. TFGauss: to compute and invert the STFT with a full Gaussian window
-    2. GaussTruncTF: to compute and invert the STFT with a truncated Gaussian window  (faster)
-* `metrics.py`: compute metrics to evaluate phase and spectrogram quality
-* `transforms.py`: useful simple transform function for spectrograms
-* `hparams.py`: default parameters
-* `phase`: folder containing source code for phase reconstruction using pghi
-    - TODO : create the folder and move files
-* `tests`: folder containing all tests
-
 
 #### TODO
-* Put the package on pypi
 * Improve doc
 * Put the documentation on readthedoc or somthing similar
 
