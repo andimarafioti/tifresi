@@ -4,7 +4,7 @@ The phase recovery algorithm used is PGHI (phase gradient heap integration).
 
 ## Installation
 
-This repository use the ltfatpy packages that requires a few libraries to be installed. The package relies on some library that have to be installed beforehands.
+This repository use the ltfatpy packages that requires a few libraries to be installed. The package relies on some libraries that have to be installed beforehands. To avoid any issue, please perform these steps in order and use a virtual environnement (pipenv, virtualenv or conda).
 
 1. Install `fftw3`, `lapack` and `cmake`
    * On debian based unix system:
