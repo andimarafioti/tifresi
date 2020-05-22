@@ -113,7 +113,6 @@ flake8 .
 
 
 #### TODO
-* Add links to papers
 * Put the package on pypi
 * Improve doc
 * Put the documentation on readthedoc or somthing similar
