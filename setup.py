@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='tifresi',
-    version='0.1.4',
+    version='0.1.5',
     description='Time Frequency Spectrogram Inversion',
     url='https://github.com/andimarafioti/tifresi',
     author='Andrés Marafioti, Nathanael Perraudin, Nicki Hollighaus',
